@@ -18,7 +18,7 @@
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-out',
-                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                        'slide-up': 'slideF0%9F%92%20slideUp%200%9.6s%20ease-out%20forwards',
                         'pulse-slow': 'pulse 3s ease-in-out infinite',
                         'gradient-flow': 'gradientFlow 10s ease infinite',
                     },
@@ -120,8 +120,7 @@
             <h2 class="text-3xl font-bold text-white mb-4">لینک اشتراک</h2>
             <p class="text-gray-300 mb-6">لینک را کپی کنید تا همه سرورها به کلاینت شما اضافه شوند.</p>
             <div class="bg-gray-800 rounded-lg p-4 mb-6">
-                <p id="subLink" class="font-mono text-cyan-400 break-all">https://pppppppp-bth.pages.dev/sub/full-normal/yb0jfuGF*F0hd0BP?app=xray#%F0%9F%92%A6%20BPB%20Full%20Normal
-</p>
+                <p id="subLink" class="font-mono text-cyan-400 break-all">https://pppppppp-bth.pages.dev/sub/full-normal/yb0jfuGF*F0hd0BP?app=xray#%F0%9F%92%A6%20BPB%20Full%20Normal</p>
             </div>
             <button onclick="copySubLink()" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-bold transition-all">
                 <i class="fa-solid fa-copy mr-2"></i>کپی لینک
@@ -223,7 +222,6 @@
             cf_de_1: { name: 'VLESS - IRDevs 1 🇩🇪', config: 'https://raw.githubusercontent.com/barry-far/V2ray-config/main/Splitted-By-Protocol/vless.txt' },
             cf_de_2: { name: 'Vmess - IRDevs 2 🇩🇪', config: 'https://raw.githubusercontent.com/barry-far/V2ray-config/main/Splitted-By-Protocol/vmess.txt' },
             cf_de_tr_7: { name: 'Trojan - IRDevs 7 🇩🇪', config: 'https://raw.githubusercontent.com/barry-far/V2ray-config/main/Splitted-By-Protocol/trojan.txt' },
-            // Add more configs as needed
         };
 
         const faqData = [
@@ -240,6 +238,11 @@
             updateServerStats();
             setInterval(updateServerStats, 3000);
             getUserInfo();
+
+            // فراخوانی اولیه برای تولید QR کد
+            if (document.getElementById('configSelect').options.length > 0) {
+                generateQR();
+            }
 
             // Theme Toggle
             document.getElementById('themeToggle').addEventListener('click', () => {
@@ -268,7 +271,6 @@
                 const response = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
                 if (!response.ok) throw new Error('Failed to fetch IP info');
                 const data = await response.json();
-                // Update UI with user info if needed
             } catch (error) {
                 showToast('خطا در دریافت اطلاعات کاربر!', 'error');
             }
@@ -357,11 +359,37 @@
         function generateQR() {
             const select = document.getElementById('configSelect');
             const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-            const qr = qrcode(0, 'M');
-            qr.addData(configs[select.value].config);
-            qr.make();
-            qrContainer.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+            qrContainer.innerHTML = ''; // پاک کردن محتوای قبلی
+
+            try {
+                if (!select.value || !configs[select.value]) {
+                    throw new Error('هیچ کانفیگی انتخاب نشده است یا کانفیگ نامعتبر است.');
+                }
+
+                const qr = qrcode(0, 'M'); // نوع QR کد با خطایابی متوسط
+                qr.addData(configs[select.value].config);
+                qr.make();
+
+                // تنظیمات SVG برای نمایش بهتر
+                qrContainer.innerHTML = qr.createSvgTag({ 
+                    cellSize: 6, // اندازه سلول‌ها برای وضوح بهتر
+                    margin: 4,   // حاشیه
+                    scalable: true 
+                });
+
+                // تنظیم استایل برای SVG
+                const svg = qrContainer.querySelector('svg');
+                if (svg) {
+                    svg.style.width = '100%';
+                    svg.style.height = 'auto';
+                    svg.style.maxWidth = '200px'; // محدود کردن اندازه
+                } else {
+                    throw new Error('SVG تولید نشد.');
+                }
+            } catch (error) {
+                qrContainer.innerHTML = '<p class="text-red-400">خطا در تولید QR کد: ' + error.message + '</p>';
+                showToast('خطا در تولید QR کد!', 'error');
+            }
         }
 
         function copySubLink() {
@@ -418,8 +446,6 @@
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
-    </script>
+    script>
 </body>
 </html>
-
-
