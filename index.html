@@ -18,7 +18,7 @@
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-out',
-                        'slide-up': 'slideF0%9F%92%20slideUp%200%9.6s%20ease-out%20forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
                         'pulse-slow': 'pulse 3s ease-in-out infinite',
                         'gradient-flow': 'gradientFlow 10s ease infinite',
                     },
@@ -231,6 +231,7 @@
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOMContentLoaded triggered');
             showWelcomeToast();
             buildFAQ();
             buildConfigList();
@@ -239,10 +240,17 @@
             setInterval(updateServerStats, 3000);
             getUserInfo();
 
-            // فراخوانی اولیه برای تولید QR کد
-            if (document.getElementById('configSelect').options.length > 0) {
-                generateQR();
-            }
+            // فراخوانی اولیه برای تولید QR کد بعد از ساخت گزینه‌ها
+            setTimeout(() => {
+                const select = document.getElementById('configSelect');
+                if (select.options.length > 0) {
+                    console.log('Generating initial QR code for:', select.value);
+                    generateQR();
+                } else {
+                    console.error('No config options available');
+                    document.getElementById('qrcode').innerHTML = '<p class="text-red-400">هیچ کانفیگی برای نمایش وجود ندارد</p>';
+                }
+            }, 0);
 
             // Theme Toggle
             document.getElementById('themeToggle').addEventListener('click', () => {
@@ -337,7 +345,13 @@
 
         function buildConfigList() {
             const container = document.getElementById('config-list-container');
+            if (!container) {
+                console.error('Config list container not found');
+                return;
+            }
+            container.innerHTML = ''; // پاک کردن محتوای قبلی
             Object.keys(configs).forEach(key => {
+                console.log('Building config:', key, configs[key].name);
                 const button = document.createElement('button');
                 button.className = 'w-full bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-lg flex justify-between';
                 button.innerHTML = `<span>${configs[key].name}</span><i class="fa-solid fa-copy"></i>`;
@@ -348,7 +362,13 @@
 
         function buildQRSelect() {
             const select = document.getElementById('configSelect');
+            if (!select) {
+                console.error('Config select element not found');
+                return;
+            }
+            select.innerHTML = ''; // پاک کردن گزینه‌های قبلی
             Object.keys(configs).forEach(key => {
+                console.log('Building QR select option:', key, configs[key].name);
                 const option = document.createElement('option');
                 option.value = key;
                 option.textContent = configs[key].name;
@@ -359,6 +379,11 @@
         function generateQR() {
             const select = document.getElementById('configSelect');
             const qrContainer = document.getElementById('qrcode');
+            if (!select || !qrContainer) {
+                console.error('Select or QR container not found');
+                qrContainer.innerHTML = '<p class="text-red-400">خطا: عناصر مورد نیاز یافت نشد</p>';
+                return;
+            }
             qrContainer.innerHTML = ''; // پاک کردن محتوای قبلی
 
             try {
@@ -366,27 +391,27 @@
                     throw new Error('هیچ کانفیگی انتخاب نشده است یا کانفیگ نامعتبر است.');
                 }
 
+                console.log('Generating QR for:', configs[select.value].config);
                 const qr = qrcode(0, 'M'); // نوع QR کد با خطایابی متوسط
                 qr.addData(configs[select.value].config);
                 qr.make();
 
-                // تنظیمات SVG برای نمایش بهتر
                 qrContainer.innerHTML = qr.createSvgTag({ 
-                    cellSize: 6, // اندازه سلول‌ها برای وضوح بهتر
+                    cellSize: 6, // اندازه سلول‌ها
                     margin: 4,   // حاشیه
                     scalable: true 
                 });
 
-                // تنظیم استایل برای SVG
                 const svg = qrContainer.querySelector('svg');
                 if (svg) {
                     svg.style.width = '100%';
                     svg.style.height = 'auto';
-                    svg.style.maxWidth = '200px'; // محدود کردن اندازه
+                    svg.style.maxWidth = '200px';
                 } else {
                     throw new Error('SVG تولید نشد.');
                 }
             } catch (error) {
+                console.error('QR generation error:', error.message);
                 qrContainer.innerHTML = '<p class="text-red-400">خطا در تولید QR کد: ' + error.message + '</p>';
                 showToast('خطا در تولید QR کد!', 'error');
             }
@@ -446,6 +471,6 @@
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
-    script>
+    </script>
 </body>
 </html>
