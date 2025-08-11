@@ -9,147 +9,107 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/iransans@4.0.0/index.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'vazir': ['Vazirmatn', 'Tahoma', 'Arial', 'sans-serif']
+                        'sans': ['IRANSans', 'Tahoma', 'Arial', 'sans-serif']
                     },
                     colors: {
-                        primary: '#10B981', // سبز نئونی برای دکمه‌ها
-                        secondary: '#4B5EAA', // آبی بنفش برای گرادیان
-                        accent: '#A78BFA', // بنفش روشن برای گرادیان
-                        card: 'rgba(255, 255, 255, 0.1)', // کارت شیشه‌ای
+                        primary: '#22D3EE', // فیروزه‌ای روشن
+                        secondary: '#1E293B', // خاکستری تیره
+                        accent: '#38BDF8', // آبی آسمانی
                     },
-                    animation: {
-                        'fade-in': 'fadeIn 0.5s ease-out',
-                        'slide-up': 'slideUp 0.6s ease-out forwards',
-                        'pulse-slow': 'pulse 3s ease-in-out infinite',
-                        'gradient-flow': 'gradientFlow 10s ease infinite',
-                    },
-                    keyframes: {
-                        fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
-                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
-                        gradientFlow: {
-                            '0%, 100%': { 'background-position': '0% 50%' },
-                            '50%': { 'background-position': '100% 50%' },
-                        }
-                    }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: linear-gradient(135deg, #4B5EAA, #A78BFA, #6B7280);
-            background-size: 200% 200%;
-            animation: gradient-flow 10s ease infinite;
-            color: #F3F4F6;
+            font-family: 'IRANSans', sans-serif;
+            background-color: #0F172A;
+            color: #F1F5F9;
         }
-        .card-float {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .card {
+            background: #1E293B;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
         }
-        .card-float:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         .status-dot {
-            background: #10B981;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
-            animation: pulse-slow 2s infinite;
+            background: #22D3EE;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
+            animation: pulse 2s ease-in-out infinite;
         }
-        .nav-link {
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.1);
-        }
-        .toast {
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        /* منوی همبرگری برای موبایل */
-        #mobile-menu {
-            transition: max-height 0.3s ease-in-out;
-        }
-        @media (max-width: 768px) {
-            .nav-link {
-                width: 100%;
-                text-align: center;
-            }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Sticky Header -->
-    <header class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-95 backdrop-blur-lg z-50 shadow-xl">
+    <!-- Header -->
+    <header class="sticky top-0 bg-secondary shadow-lg z-50">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-4 space-x-reverse">
                 <span class="text-3xl text-primary">🚀</span>
-                <h1 class="text-2xl font-bold text-white">فری نت</h1>
+                <h1 class="text-2xl font-bold">فری نت</h1>
             </div>
-            <button id="menuToggle" class="md:hidden text-white p-2 rounded-full hover:bg-gray-700" aria-label="باز کردن منو">
-                <i class="fa-solid fa-bars"></i>
+            <button id="menuToggle" class="md:hidden p-2 rounded-full hover:bg-gray-600" aria-label="باز کردن منو">
+                <i class="fa-solid fa-bars text-white"></i>
             </button>
             <nav id="desktop-menu" class="hidden md:flex space-x-4 space-x-reverse">
-                <a href="#sublink" class="nav-link px-4 py-2 text-white rounded-lg">لینک اشتراک</a>
-                <a href="#download" class="nav-link px-4 py-2 text-white rounded-lg">دانلود</a>
-                <a href="#faq" class="nav-link px-4 py-2 text-white rounded-lg">سوالات متداول</a>
+                <a href="#sublink" class="px-4 py-2 text-white hover:bg-primary rounded-lg">لینک اشتراک</a>
+                <a href="#download" class="px-4 py-2 text-white hover:bg-primary rounded-lg">دانلود</a>
+                <a href="#faq" class="px-4 py-2 text-white hover:bg-primary rounded-lg">سوالات متداول</a>
             </nav>
-            <button id="themeToggle" class="text-white p-2 rounded-full hover:bg-gray-700" aria-label="تغییر تم">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+            <nav id="mobile-menu" class="md:hidden hidden flex-col space-y-2 px-4 pb-4 bg-secondary max-h-0 overflow-hidden transition-all">
+                <a href="#sublink" class="px-4 py-2 text-white hover:bg-primary rounded-lg">لینک اشتراک</a>
+                <a href="#download" class="px-4 py-2 text-white hover:bg-primary rounded-lg">دانلود</a>
+                <a href="#faq" class="px-4 py-2 text-white hover:bg-primary rounded-lg">سوالات متداول</a>
+            </nav>
         </div>
-        <!-- منوی همبرگری برای موبایل -->
-        <nav id="mobile-menu" class="md:hidden hidden flex-col space-y-2 px-4 pb-4 bg-gray-900 bg-opacity-95 max-h-0 overflow-hidden">
-            <a href="#sublink" class="nav-link px-4 py-2 text-white rounded-lg">لینک اشتراک</a>
-            <a href="#download" class="nav-link px-4 py-2 text-white rounded-lg">دانلود</a>
-            <a href="#faq" class="nav-link px-4 py-2 text-white rounded-lg">سوالات متداول</a>
-        </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-16 container mx-auto px-4 text-center">
-        <div class="animate-slide-up">
-            <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">اینترنت آزاد با فری نت</h2>
-            <p class="text-base md:text-lg text-gray-200 mb-8">اتصال سریع، امن و رایگان به دنیای بدون محدودیت</p>
-            <div class="card-float rounded-2xl p-6 max-w-md mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <p class="text-sm text-gray-300">وضعیت</p>
-                        <div class="flex items-center justify-center">
-                            <span class="status-dot w-3 h-3 rounded-full mr-2"></span>
-                            <span id="uptime" class="font-bold text-primary">99.99%</span>
-                        </div>
+    <section class="py-16 container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4">اینترنت آزاد با فری نت</h2>
+        <p class="text-lg text-gray-300 mb-8">اتصال سریع، امن و رایگان به دنیای بدون محدودیت</p>
+        <div class="card p-6 max-w-md mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                    <p class="text-sm text-gray-400">وضعیت</p>
+                    <div class="flex items-center justify-center">
+                        <span class="status-dot w-3 h-3 rounded-full mr-2"></span>
+                        <span id="uptime" class="font-bold text-primary">99.99%</span>
                     </div>
-                    <div>
-                        <p class="text-sm text-gray-300">سرورهای فعال</p>
-                        <span id="activeServers" class="font-bold text-primary">24</span>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-300">پینگ</p>
-                        <span id="serverPing" class="font-bold text-primary">-- ms</span>
-                    </div>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-400">سرورهای فعال</p>
+                    <span id="activeServers" class="font-bold text-primary">24</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-400">پینگ</p>
+                    <span id="serverPing" class="font-bold text-primary">-- ms</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Subscription Link -->
-    <section id="sublink" class="py-16 container mx-auto px-4 animate-slide-up">
-        <div class="card-float rounded-2xl p-8 max-w-lg mx-auto text-center">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">لینک اشتراک</h2>
-            <p class="text-gray-200 mb-6">لینک را کپی کنید تا همه سرورها به کلاینت شما اضافه شوند.</p>
-            <div class="bg-gray-800 rounded-lg p-4 mb-6">
+    <section id="sublink" class="py-16 container mx-auto px-4">
+        <div class="card p-8 max-w-lg mx-auto text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">لینک اشتراک</h2>
+            <p class="text-gray-300 mb-6">لینک را کپی کنید تا همه سرورها به کلاینت شما اضافه شوند.</p>
+            <div class="bg-gray-700 rounded-lg p-4 mb-6">
                 <p id="subLink" class="font-mono text-primary break-all">https://pppppppp-bth.pages.dev/sub/full-normal/yb0jfuGF*F0hd0BP?app=xray#%F0%9F%92%A6%20BPB%20Full%20Normal</p>
             </div>
-            <button onclick="copySubLink()" class="bg-primary hover:bg-green-600 text-white px-6 py-3 rounded-lg font-bold transition-all" aria-label="کپی لینک اشتراک">
+            <button onclick="copySubLink()" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-bold transition-all" aria-label="کپی لینک اشتراک">
                 <i class="fa-solid fa-copy mr-2"></i>کپی لینک
             </button>
         </div>
@@ -158,65 +118,62 @@
     <!-- Config and QR Code -->
     <section id="configs" class="py-16 container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <!-- Config List -->
-            <div class="card-float rounded-2xl p-8 animate-slide-up">
-                <h3 class="text-xl md:text-2xl font-bold text-white mb-4">انتخاب کانفیگ</h3>
+            <div class="card p-8">
+                <h3 class="text-2xl font-bold mb-4">انتخاب کانفیگ</h3>
                 <div id="config-list-container" class="space-y-3 max-h-64 overflow-y-auto"></div>
             </div>
-            <!-- QR Code -->
-            <div class="card-float rounded-2xl p-8 animate-slide-up">
-                <h3 class="text-xl md:text-2xl font-bold text-white mb-4">QR کد</h3>
+            <div class="card p-8">
+                <h3 class="text-2xl font-bold mb-4">QR کد</h3>
                 <div class="bg-white rounded-lg p-4 mb-6 flex justify-center">
                     <div id="qrcode"></div>
                 </div>
-                <select id="configSelect" onchange="generateQR()" class="w-full bg-gray-800 text-white p-3 rounded-lg">
-                    <!-- Options will be injected here -->
-                </select>
+                <select id="configSelect" onchange="generateQR()" class="w-full bg-gray-700 text-white p-3 rounded-lg"></select>
             </div>
         </div>
     </section>
 
     <!-- Download Section -->
     <section id="download" class="py-16 container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-8">دانلود کلاینت‌ها</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">دانلود کلاینت‌ها</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com&pli=1" class="card-float rounded-2xl p-6 text-center">
+            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com&pli=1" class="card p-6 text-center">
                 <i class="fa-brands fa-android text-5xl text-primary mb-4"></i>
-                <h3 class="font-bold text-white">اندروید</h3>
-                <p class="text-gray-300">hiddify</p>
+                <h3 class="font-bold">اندروید</h3>
+                <p class="text-gray-400">hiddify</p>
             </a>
-            <a href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone" class="card-float rounded-2xl p-6 text-center">
+            <a href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone" class="card p-6 text-center">
                 <i class="fa-brands fa-apple text-5xl text-primary mb-4"></i>
-                <h3 class="font-bold text-white">iOS</h3>
-                <p class="text-gray-300">hiddify</p>
+                <h3 class="font-bold">iOS</h3>
+                <p class="text-gray-400">hiddify</p>
             </a>
-            <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Setup-x64.Msix" class="card-float rounded-2xl p-6 text-center">
+            <a href="https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Setup-x64.Msix" class="card p-6 text-center">
                 <i class="fa-brands fa-windows text-5xl text-primary mb-4"></i>
-                <h3 class="font-bold text-white">ویندوز</h3>
-                <p class="text-gray-300">hiddify</p>
+                <h3 class="font-bold">ویندوز</h3>
+                <p class="text-gray-400">hiddify</p>
             </a>
-            <a href="https://github.com/hiddify/hiddify-next/releases" class="card-float rounded-2xl p-6 text-center">
+            <a href="https://github.com/hiddify/hiddify-next/releases" class="card p-6 text-center">
                 <i class="fa-brands fa-apple text-5xl text-primary mb-4"></i>
-                <h3 class="font-bold text-white">macOS</h3>
-                <p class="text-gray-300">Hiddify Next</p>
+                <h3 class="font-bold">macOS</h3>
+                <p class="text-gray-400">Hiddify Next</p>
             </a>
         </div>
     </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-16 container mx-auto px-4">
-        <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-8">سوالات متداول</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">سوالات متداول</h2>
         <div id="faq-container" class="max-w-3xl mx-auto space-y-4"></div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 bg-gray-900 bg-opacity-95 text-center">
-        <p class="text-gray-200">© 1404 فرینت - ساخته شده با ❤️ برای اینترنت آزاد</p>
+    <footer class="py-8 bg-secondary text-center">
+        <p class="text-gray-400">© 1404 فرینت - ساخته شده با ❤️ برای اینترنت آزاد</p>
         <div class="flex justify-center space-x-4 mt-4">
-            <a href="https://t.me/ropia67" class="text-primary hover:text-green-600"><i class="fa-brands fa-telegram text-2xl"></i></a>
+            <a href="https://t.me/ropia67" class="text-primary hover:text-accent"><i class="fa-brands fa-telegram text-2xl"></i></a>
         </div>
     </footer>
 
+    <!-- JavaScript (بدون تغییر نسبت به کد اصلی) -->
     <script>
         const configs = {
             cf_de_1: { name: 'VLESS - ', config: 'https://raw.githubusercontent.com/barry-far/V2ray-config/main/Splitted-By-Protocol/vless.txt' },
@@ -231,7 +188,6 @@
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOMContentLoaded triggered');
             showWelcomeToast();
             buildFAQ();
             buildConfigList();
@@ -240,7 +196,6 @@
             setInterval(updateServerStats, 3000);
             getUserInfo();
 
-            // منوی همبرگری
             const menuToggle = document.getElementById('menuToggle');
             const mobileMenu = document.getElementById('mobile-menu');
             menuToggle.addEventListener('click', () => {
@@ -252,40 +207,14 @@
                 icon.classList.toggle('fa-times');
             });
 
-            // فراخوانی اولیه برای تولید QR کد
             setTimeout(() => {
                 const select = document.getElementById('configSelect');
                 if (select.options.length > 0) {
-                    console.log('Generating initial QR code for:', select.value);
                     generateQR();
                 } else {
-                    console.error('No config options available');
                     document.getElementById('qrcode').innerHTML = '<p class="text-red-400">هیچ کانفیگی برای نمایش وجود ندارد</p>';
                 }
             }, 0);
-
-            // Theme Toggle
-            document.getElementById('themeToggle').addEventListener('click', () => {
-                document.body.classList.toggle('light');
-                const icon = document.getElementById('themeToggle').querySelector('i');
-                icon.classList.toggle('fa-moon');
-                icon.classList.toggle('fa-sun');
-                if (document.body.classList.contains('light')) {
-                    document.body.style.background = 'linear-gradient(135deg, #E5E7EB, #D1D5DB, #9CA3AF)';
-                    document.body.style.color = '#1F2937';
-                } else {
-                    document.body.style.background = 'linear-gradient(135deg, #4B5EAA, #A78BFA, #6B7280)';
-                    document.body.style.color = '#F3F4F6';
-                }
-            });
-
-            // Scroll Animation
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('animate-slide-up');
-                });
-            }, { threshold: 0.2 });
-            document.querySelectorAll('.animate-slide-up').forEach(el => observer.observe(el));
         });
 
         function updateServerStats() {
@@ -305,15 +234,10 @@
 
         function buildConfigList() {
             const container = document.getElementById('config-list-container');
-            if (!container) {
-                console.error('Config list container not found');
-                return;
-            }
             container.innerHTML = '';
             Object.keys(configs).forEach(key => {
-                console.log('Building config:', key, configs[key].name);
                 const button = document.createElement('button');
-                button.className = 'w-full bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-lg flex justify-between';
+                button.className = 'w-full bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-lg flex justify-between';
                 button.innerHTML = `<span>${configs[key].name}</span><i class="fa-solid fa-copy"></i>`;
                 button.setAttribute('aria-label', `کپی کانفیگ ${configs[key].name}`);
                 button.onclick = () => copyToClipboard(configs[key].config, 'کانفیگ کپی شد!');
@@ -323,13 +247,8 @@
 
         function buildQRSelect() {
             const select = document.getElementById('configSelect');
-            if (!select) {
-                console.error('Config select element not found');
-                return;
-            }
             select.innerHTML = '';
             Object.keys(configs).forEach(key => {
-                console.log('Building QR select option:', key, configs[key].name);
                 const option = document.createElement('option');
                 option.value = key;
                 option.textContent = configs[key].name;
@@ -340,39 +259,20 @@
         function generateQR() {
             const select = document.getElementById('configSelect');
             const qrContainer = document.getElementById('qrcode');
-            if (!select || !qrContainer) {
-                console.error('Select or QR container not found');
-                qrContainer.innerHTML = '<p class="text-red-400">خطا: عناصر مورد نیاز یافت نشد</p>';
-                return;
-            }
             qrContainer.innerHTML = '';
-
             try {
                 if (!select.value || !configs[select.value]) {
                     throw new Error('هیچ کانفیگی انتخاب نشده است یا کانفیگ نامعتبر است.');
                 }
-
-                console.log('Generating QR for:', configs[select.value].config);
                 const qr = qrcode(0, 'M');
                 qr.addData(configs[select.value].config);
                 qr.make();
-
-                qrContainer.innerHTML = qr.createSvgTag({ 
-                    cellSize: 8,
-                    margin: 4,
-                    scalable: true 
-                });
-
+                qrContainer.innerHTML = qr.createSvgTag({ cellSize: 8, margin: 4, scalable: true });
                 const svg = qrContainer.querySelector('svg');
-                if (svg) {
-                    svg.style.width = '100%';
-                    svg.style.height = 'auto';
-                    svg.style.maxWidth = '250px';
-                } else {
-                    throw new Error('SVG تولید نشد.');
-                }
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '250px';
             } catch (error) {
-                console.error('QR generation error:', error.message);
                 qrContainer.innerHTML = '<p class="text-red-400">خطا در تولید QR کد: ' + error.message + '</p>';
                 showToast('خطا در تولید QR کد!', 'error');
             }
@@ -395,17 +295,16 @@
             const container = document.getElementById('faq-container');
             faqData.forEach(item => {
                 const faqItem = document.createElement('div');
-                faqItem.className = 'card-float rounded-lg p-4';
+                faqItem.className = 'card p-4';
                 faqItem.innerHTML = `
                     <div class="faq-question flex justify-between items-center cursor-pointer" role="button" aria-expanded="false">
-                        <h3 class="font-bold text-white">${item.question}</h3>
-                        <i class="fa-solid fa-chevron-down text-gray-300"></i>
+                        <h3 class="font-bold">${item.question}</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-400"></i>
                     </div>
                     <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
-                        <p class="p-4 text-gray-200">${item.answer}</p>
+                        <p class="p-4 text-gray-300">${item.answer}</p>
                     </div>`;
                 container.appendChild(faqItem);
-
                 faqItem.querySelector('.faq-question').addEventListener('click', () => {
                     const answer = faqItem.querySelector('.faq-answer');
                     const icon = faqItem.querySelector('i');
@@ -425,16 +324,14 @@
 
         function showToast(message, type) {
             const toast = document.createElement('div');
-            toast.className = `toast fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-primary' : 'bg-red-500'}`;
+            toast.className = `fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ${type === 'success' ? 'bg-primary' : 'bg-red-500'}`;
             toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>${message}`;
             document.body.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(20px)';
                 setTimeout(() => toast.remove(), 500);
             }, 3000);
         }
     </script>
 </body>
 </html>
-
