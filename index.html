@@ -18,9 +18,9 @@
                         'sans': ['IRANSans', 'Tahoma', 'Arial', 'sans-serif']
                     },
                     colors: {
-                        primary: '#22D3EE', // فیروزه‌ای روشن
-                        secondary: '#1E293B', // خاکستری تیره
-                        accent: '#38BDF8', // آبی آسمانی
+                        primary: '#8B5CF6', // بنفش
+                        secondary: '#1E1B4B', // آبی تیره
+                        accent: '#38BDF8', // آبی روشن
                     },
                 }
             }
@@ -32,6 +32,11 @@
             background-color: #0F172A;
             color: #F1F5F9;
         }
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1920x1080/?tech');
+            background-size: cover;
+            background-position: center;
+        }
         .card {
             background: #1E293B;
             border-radius: 1rem;
@@ -39,11 +44,11 @@
         }
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
         .status-dot {
-            background: #22D3EE;
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
+            background: #8B5CF6;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
             animation: pulse 2s ease-in-out infinite;
         }
         @keyframes pulse {
@@ -53,49 +58,39 @@
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Header -->
-    <header class="sticky top-0 bg-secondary shadow-lg z-50">
-        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-4 space-x-reverse">
-                <span class="text-3xl text-primary">🚀</span>
-                <h1 class="text-2xl font-bold">فری نت</h1>
+    <!-- Full-Screen Hero Header -->
+    <header class="hero-bg h-screen flex items-center justify-center text-center">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-center space-x-4 space-x-reverse mb-6">
+                <span class="text-5xl text-primary">🚀</span>
+                <h1 class="text-4xl md:text-6xl font-bold text-white">فری نت</h1>
             </div>
-            <button id="menuToggle" class="md:hidden p-2 rounded-full hover:bg-gray-600" aria-label="باز کردن منو">
-                <i class="fa-solid fa-bars text-white"></i>
-            </button>
-            <nav id="desktop-menu" class="hidden md:flex space-x-4 space-x-reverse">
-                <a href="#sublink" class="px-4 py-2 text-white hover:bg-primary rounded-lg">لینک اشتراک</a>
-                <a href="#download" class="px-4 py-2 text-white hover:bg-primary rounded-lg">دانلود</a>
-                <a href="#faq" class="px-4 py-2 text-white hover:bg-primary rounded-lg">سوالات متداول</a>
-            </nav>
-            <nav id="mobile-menu" class="md:hidden hidden flex-col space-y-2 px-4 pb-4 bg-secondary max-h-0 overflow-hidden transition-all">
-                <a href="#sublink" class="px-4 py-2 text-white hover:bg-primary rounded-lg">لینک اشتراک</a>
-                <a href="#download" class="px-4 py-2 text-white hover:bg-primary rounded-lg">دانلود</a>
-                <a href="#faq" class="px-4 py-2 text-white hover:bg-primary rounded-lg">سوالات متداول</a>
-            </nav>
+            <h2 class="text-2xl md:text-4xl font-bold text-white mb-4">اینترنت آزاد و امن</h2>
+            <p class="text-lg md:text-xl text-gray-300 mb-8">اتصال سریع و رایگان به دنیای بدون محدودیت</p>
+            <a href="#sublink" class="bg-primary hover:bg-accent text-white px-8 py-3 rounded-lg font-bold text-lg">شروع کنید</a>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="py-16 container mx-auto px-4 text-center">
-        <h2 class="text-3xl md:text-5xl font-bold mb-4">اینترنت آزاد با فری نت</h2>
-        <p class="text-lg text-gray-300 mb-8">اتصال سریع، امن و رایگان به دنیای بدون محدودیت</p>
-        <div class="card p-6 max-w-md mx-auto">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                    <p class="text-sm text-gray-400">وضعیت</p>
-                    <div class="flex items-center justify-center">
-                        <span class="status-dot w-3 h-3 rounded-full mr-2"></span>
-                        <span id="uptime" class="font-bold text-primary">99.99%</span>
+    <!-- Status Section -->
+    <section class="py-16 bg-secondary">
+        <div class="container mx-auto px-4 text-center">
+            <div class="card p-8 max-w-3xl mx-auto">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div>
+                        <p class="text-sm text-gray-400">وضعیت</p>
+                        <div class="flex items-center justify-center">
+                            <span class="status-dot w-3 h-3 rounded-full mr-2"></span>
+                            <span id="uptime" class="font-bold text-primary">99.99%</span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-400">سرورهای فعال</p>
-                    <span id="activeServers" class="font-bold text-primary">24</span>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-400">پینگ</p>
-                    <span id="serverPing" class="font-bold text-primary">-- ms</span>
+                    <div>
+                        <p class="text-sm text-gray-400">سرورهای فعال</p>
+                        <span id="activeServers" class="font-bold text-primary">24</span>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">پینگ</p>
+                        <span id="serverPing" class="font-bold text-primary">-- ms</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,31 +98,35 @@
 
     <!-- Subscription Link -->
     <section id="sublink" class="py-16 container mx-auto px-4">
-        <div class="card p-8 max-w-lg mx-auto text-center">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4">لینک اشتراک</h2>
-            <p class="text-gray-300 mb-6">لینک را کپی کنید تا همه سرورها به کلاینت شما اضافه شوند.</p>
+        <div class="card p-8 max-w-2xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-4">لینک اشتراک</h2>
+            <p class="text-gray-300 mb-6">لینک را کپی کنید تا به سرورهای ما متصل شوید.</p>
             <div class="bg-gray-700 rounded-lg p-4 mb-6">
                 <p id="subLink" class="font-mono text-primary break-all">https://pppppppp-bth.pages.dev/sub/full-normal/yb0jfuGF*F0hd0BP?app=xray#%F0%9F%92%A6%20BPB%20Full%20Normal</p>
             </div>
-            <button onclick="copySubLink()" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-bold transition-all" aria-label="کپی لینک اشتراک">
+            <button onclick="copySubLink()" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-bold" aria-label="کپی لینک اشتراک">
                 <i class="fa-solid fa-copy mr-2"></i>کپی لینک
             </button>
         </div>
     </section>
 
     <!-- Config and QR Code -->
-    <section id="configs" class="py-16 container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div class="card p-8">
-                <h3 class="text-2xl font-bold mb-4">انتخاب کانفیگ</h3>
-                <div id="config-list-container" class="space-y-3 max-h-64 overflow-y-auto"></div>
-            </div>
-            <div class="card p-8">
-                <h3 class="text-2xl font-bold mb-4">QR کد</h3>
-                <div class="bg-white rounded-lg p-4 mb-6 flex justify-center">
-                    <div id="qrcode"></div>
+    <section id="configs" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="card p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">انتخاب کانفیگ</h3>
+                        <div id="config-list-container" class="space-y-3 max-h-64 overflow-y-auto"></div>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-4">QR کد</h3>
+                        <div class="bg-white rounded-lg p-4 mb-6 inline-block">
+                            <div id="qrcode"></div>
+                        </div>
+                        <select id="configSelect" onchange="generateQR()" class="w-full bg-gray-700 text-white p-3 rounded-lg"></select>
+                    </div>
                 </div>
-                <select id="configSelect" onchange="generateQR()" class="w-full bg-gray-700 text-white p-3 rounded-lg"></select>
             </div>
         </div>
     </section>
@@ -135,7 +134,7 @@
     <!-- Download Section -->
     <section id="download" class="py-16 container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-8">دانلود کلاینت‌ها</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             <a href="https://play.google.com/store/apps/details?id=app.hiddify.com&pli=1" class="card p-6 text-center">
                 <i class="fa-brands fa-android text-5xl text-primary mb-4"></i>
                 <h3 class="font-bold">اندروید</h3>
@@ -160,9 +159,11 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-16 container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-8">سوالات متداول</h2>
-        <div id="faq-container" class="max-w-3xl mx-auto space-y-4"></div>
+    <section id="faq" class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">سوالات متداول</h2>
+            <div id="faq-container" class="max-w-3xl mx-auto space-y-4"></div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -195,17 +196,6 @@
             updateServerStats();
             setInterval(updateServerStats, 3000);
             getUserInfo();
-
-            const menuToggle = document.getElementById('menuToggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            menuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('max-h-96');
-                mobileMenu.classList.toggle('max-h-0');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
-            });
 
             setTimeout(() => {
                 const select = document.getElementById('configSelect');
